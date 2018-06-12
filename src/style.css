@@ -1,0 +1,49 @@
+header {
+    border: 1px solid #CCC;
+    width: 1350px;
+    height: 120px;
+    background: #ffe521;
+}
+
+.centrado {
+    margin-top: 20px;
+}
+
+nav {
+    
+    margin-left: 150px;
+    display: inline-block;
+    border: 2px solid #f8b90ce8;
+    border-radius: 20px;
+    padding: 0 0 0 40px;
+    background: white;
+}
+
+input,button {
+    position: relative;
+    float: left;
+    padding: 0;
+    height: 35px;
+}
+
+input {
+    color:#000;
+    border: none;
+    z-index: 2;
+    
+
+}
+
+button {
+
+    font-size: 15px;
+    border-radius: 0 20px 20px 0;
+    width: 40px;
+    border: none;
+    transition-duration: .3s;
+    transform: translate(-10spx,0);
+}
+
+.fa-search{
+    color: white;
+}
