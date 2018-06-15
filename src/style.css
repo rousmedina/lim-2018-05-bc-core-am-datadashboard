@@ -14,7 +14,6 @@ body {
 
 header {
     border: 1px solid #CCC;
-    width: 1350px;
     height: 120px;
     background: #ffe521;
 }
@@ -140,4 +139,26 @@ a{
     color: #fff;
 
 
+}
+
+@media screen and (max-width:450px) {
+    body{
+        padding-top: 80px;
+    }
+
+    .contenedor-menu{
+        margin: 0;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        z-index: 1000;
+    }
+    .btn-menu {
+
+   display: block;
+    }
+
+    .contenedor-menu .menu {
+        display: none;
+    }
 }
