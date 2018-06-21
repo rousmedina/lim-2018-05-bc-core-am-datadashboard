@@ -5,21 +5,21 @@ $(document).ready(function(){
         if ($(this).hasClass('activado')) {
             $(this).removeClass('activado');
             $(this).children('ul').slideUp();
-
+ 
         } else {
-
+ 
             $('.menu li ul').slideUp();
             $('.menu li').removeClass('activado');
             $(this).addClass('activado');
             $(this).children('ul').slideDown();
-
+ 
          }
         });
-
+ 
         $('btn-menu').click(function(){
             $('.contenedor-menu .menu').slideToggle();
         });
-
+ 
         $(window).resize(function() {
            if ($(document).width() > 450){
                $ ('.contenedor-menu').css({'display':'block'});
@@ -33,4 +33,4 @@ $(document).ready(function(){
            }
         });
     });
-
+ 
