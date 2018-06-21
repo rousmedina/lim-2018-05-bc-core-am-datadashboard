@@ -10,11 +10,21 @@
   <body>
     <header>
 <img class= "centrado" src="../src/img/Laboratoria_RGB_logo-01.png" height="80px">
-<nav>
+
+
+<nav class="site-containier">
+  <form id="search-form">
 <input type="search" placeholder="buscar..." size="50px"/>
 <button type="submit">
     <i class="fas fa-search"></i></button>
+  </form>
 </nav>
+
+<div class="site-containier">
+  <ul id="reponse-container"></ul>
+</div>
+
+
 
 <div class="perfil"><center> <i class="far fa-user"></i>
 
@@ -131,8 +141,8 @@
     </footer>
   </section>
         <script src="../data/cohorts.json"></script>
-        <script src="http://127.0.0.1:8080/data/cohorts.json"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script src="main.js"></script>
+        <script src="data.js"></script>
   </body>
 </html>
