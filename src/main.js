@@ -1,40 +1,150 @@
-//* botones //*
+const divCohorts = document.getElementById("divCohorts");
 
-$(document).ready(function(){
-   $('.menu li:has(ul)').click(function(e){
-       e.preventDefault();
-   
-       if ($(this).hasClass('activado')) {
-           $(this).removeClass('activado');
-           $(this).children('ul').slideUp();
+const btnCohorts = document.getElementById('btnCohorts');
 
-       } else {
+btnCohorts.addEventListener ('click', (e) => {
+    e.preventDefault();
+    getListCohorts();
+ });
 
-           $('.menu li ul').slideUp();
-           $('.menu li').removeClass('activado');
-           $(this).addClass('activado');
-           $(this).children('ul').slideDown();
-
+ getListCohorts = () => {
+     let cohortsPromise = fetch('../data/cohorts.json').then((response)=>{
+        if(response.status === 200){
+            return response.json();
+        }else{
+            throw new Error('ocurriò un error!');
         }
-       });
+     });
 
-       $('btn-menu').click(function(){
-           $('.contenedor-menu .menu').slideToggle();
-       });
+     cohortsPromise.then((jsonCohorts) => {
+        //console.log(jsonCohorts);
+        if (divCohorts){
+            let filas = "";
+            jsonCohorts.forEach((cohort, index) => {
+                filas = filas + "<tr onClick='showUsersByCohorts(\""+cohort.id+"\")' ><th scope='row'>"+(index+1)+"</th><td>"+cohort.id+"</td></tr>";
+            });
+    
+            let tablaCohorts = 
+            "<table class='table'>"+
+            "<thead class='thead-dark'>"+
+            "    <tr>"+
+            "        <th scope='col'>#</th>"+
+            "        <th scope='col'>Cohort Name</th>"+
+            "    </tr>"+
+            "</thead>"+
+            "<tbody>"+
+            filas
+            "</tbody>"+
+            "</table>";
+        
+            divCohorts.innerHTML = tablaCohorts;
+        }
+     });
+ }
 
-       $(window).resize(function() {
-          if ($(document).width() > 450){
-              $ ('.contenedor-menu').css({'display':'block'});
-           
-          }
-          if ($(document).width() < 450){
-              $('.contenedor-menu .menu').css ({'display':'none'});
-              $('.menu li ul').slideUp();
-              $('.menu li').removeClass('activado');
-           
-          }
-       });
-   });
+ showUsersByCohorts = (cohortName) => {
 
-//* busqueda //*
+    let cohortsPromise = fetch('../data/cohorts.json').then((response)=>{
+        if(response.status === 200){
+            return response.json();
+        }else{
+            throw new Error('ocurriò un error!');
+        }
+     });
 
+    let usersPromise = fetch('../data/cohorts/lim-2018-03-pre-core-pw/users.json').then((response)=>{
+        if(response.status === 200){
+            return response.json();
+        }else{
+            throw new Error('ocurriò un error!');
+        }
+     });
+
+     let progressPromise = fetch('../data/cohorts/lim-2018-03-pre-core-pw/progress.json').then((response)=>{
+        if(response.status === 200){
+            return response.json();
+        }else{
+            throw new Error('ocurriò un error!');
+        }
+     });
+
+     let cohorts, users, progress = [];
+     cohortsPromise.then((jsonCohorts) => {
+        cohorts = jsonCohorts;
+        return usersPromise;
+     }).then((jsonUsers)=>{
+        users = jsonUsers;
+        return progressPromise;
+     }).then((jsonProgress)=>{
+        progress = jsonProgress;
+
+        let userCohorts = users.filter((usuario) => {
+            return usuario.signupCohort === cohortName;
+        });   
+
+        const cohort = cohorts.find(item => item.id === cohortName);
+        const courses = Object.keys(cohort.coursesIndex);
+
+        let userWithStats = computeUsersStats(userCohorts, progress, courses);
+        
+        console.log(userWithStats);
+
+        let filas = "";
+        userWithStats.forEach((user, index) => {
+            filas = filas + "<tr onClick='showUserProgress(\""+user.id+"\")' ><th scope='row'>"+(index+1)+"</th><td>"+user.name+"</td><td>"+user.stats.percent+"</td><td>"+user.stats.exercises.percent+"</td><td>"+user.stats.quizzes.percent+"</td><td>"+user.stats.quizzes.scoreAvg+"</td><td>"+user.stats.reads.percent+"</td></tr>";
+        });
+
+        let tablaUsers = 
+        "<table class='table'>"+
+        "<thead class='thead-dark'>"+
+        "    <tr>"+
+        "        <th scope='col'>#</th>"+
+        "        <th scope='col'>User Name</th>"+
+        "        <th scope='col'>Progress %</th>"+
+        "        <th scope='col'>Exercises %</th>"+
+        "        <th scope='col'>Quizzes %</th>"+
+        "        <th scope='col'>P.Quizzes %</th>"+
+        "        <th scope='col'>Reads %</th>"+
+        "    </tr>"+
+        "</thead>"+
+        "<tbody>"+
+        filas
+        "</tbody>"+
+        "</table>";
+    
+        divCohorts.innerHTML = tablaUsers;
+
+
+     });
+
+
+     /*
+     usersPromise.then((jsonUsers) => {
+
+        let usuariosCohort = jsonUsers.filter((usuario) => {
+            return usuario.signupCohort === cohortName;
+        });   
+        
+        let filas = "";
+        usuariosCohort.forEach((user, index) => {
+            filas = filas + "<tr onClick='showUserProgress(\""+user.id+"\")' ><th scope='row'>"+(index+1)+"</th><td>"+user.id+"</td><td>"+user.name+"</td></tr>";
+        });
+
+        let tablaUsers = 
+        "<table class='table'>"+
+        "<thead class='thead-dark'>"+
+        "    <tr>"+
+        "        <th scope='col'>#</th>"+
+        "        <th scope='col'>User Id</th>"+
+        "        <th scope='col'>User Name</th>"+
+        "    </tr>"+
+        "</thead>"+
+        "<tbody>"+
+        filas
+        "</tbody>"+
+        "</table>";
+    
+        divCohorts.innerHTML = tablaUsers;
+     }); */
+
+ }
