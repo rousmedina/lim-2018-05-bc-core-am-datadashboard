@@ -153,4 +153,9 @@ window.processCohortData = (options) => {
     userWithStats = sortUsers(userWithStats, options.orderBy, options.orderDirection);
     userWithStats = filterUsers(userWithStats, options.search);
     return userWithStats;
+<<<<<<< HEAD
 }
+=======
+}
+
+>>>>>>> d5dd5589d11434695bd62ef91498c69d0ac5eeec

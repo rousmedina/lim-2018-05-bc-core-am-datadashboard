@@ -116,6 +116,7 @@ btnCohorts.addEventListener ('click', (e) => {
 
 
      });
+<<<<<<< HEAD
 
 
      /*
@@ -148,3 +149,16 @@ btnCohorts.addEventListener ('click', (e) => {
      }); */
 
  }
+=======
+ let textSearch = document.getElementById('textSearch');
+const btnSearch = document.getElementById('btnSearch');
+
+btnSearch.addEventListener('click', (e)=>{
+alert('Hola  '+ textSearch.value);
+});
+ }
+
+
+
+
+>>>>>>> d5dd5589d11434695bd62ef91498c69d0ac5eeec
